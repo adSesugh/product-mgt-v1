@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String    @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -23,18 +23,25 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime? @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }
 
 model User {
@@ -46,6 +53,11 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  products      Product[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+
+  @@map("users")
 }
 
 model VerificationToken {
@@ -53,5 +65,57 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
   @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Employee {
+  id          String  @id @default(cuid())
+  first_name  String
+  middle_name String?
+  last_name   String
+
+  jobRoleId String  @unique
+  jobRole   JobRole @relation(fields: [jobRoleId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("employees")
+}
+
+model JobRole {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  salary      Decimal   @default(0.00)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  employee    Employee?
+
+  @@map("job_roles")
+}
+
+model Product {
+  id            String    @id @default(uuid())
+  name          String    @unique
+  price         Decimal   @default(0.00)
+  description   String?
+  barcode       String?
+  qty           Int
+  expiry        DateTime?
+  reorder_level Int       @default(10)
+  qty_sold      Int       @default(0)
+  min_qty       Int       @default(15)
+  picture       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  User          User?     @relation(fields: [userId], references: [id])
+  userId        String?
+  status        String    @default("In-Stock")
+
+  @@map("products")
 }

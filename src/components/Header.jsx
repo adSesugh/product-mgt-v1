@@ -9,14 +9,20 @@ export default function Header () {
     return (
         <Fragment>
             {status === "authenticated" && data !== null && (
-                <div className="flex justify-between h-16 bg-slate-400 px-6 items-center">
+                <div className="flex justify-between h-[10vh] bg-slate-400 px-6 items-center border-b-2 border-white">
                     <div>
                         <ul className='flex list-none gap-x-6'>
                             <li className='text-slate-100'>
                                 <Link href={'/dashboard'}>Dashboard</Link>
                             </li>
                             <li className='text-slate-100'>
-                                <Link href={'/products'}>Product</Link>
+                                <Link href={'/products'}>Products</Link>
+                            </li>
+                            <li className='text-slate-100'>
+                                <Link href={'/jobRoles'}>Job Roles</Link>
+                            </li>
+                            <li className='text-slate-100'>
+                                <Link href={'/employees'}>Employees</Link>
                             </li>
                         </ul>
                     </div>

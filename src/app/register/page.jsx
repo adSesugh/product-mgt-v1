@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { FormEvent } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -50,7 +49,7 @@ export default function Register () {
                     <button type='submit' className='px-5 py-2 text-white bg-green-900 rounded-md'>Submit</button>
                 </form>
                 <p className='text-center py-2text-center py-2'>
-                    Already registered? <Link href='/login' className='underline italic text-[12px]'>Login here</Link>
+                    Already registered? <Link href='/login' className='underline italic text-[13px]'>Login here</Link>
                 </p>
             </div>
         </div>
