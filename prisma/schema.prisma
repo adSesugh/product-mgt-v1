@@ -78,11 +78,10 @@ model Employee {
   middle_name String?
   last_name   String
 
-  jobRoleId String  @unique
-  jobRole   JobRole @relation(fields: [jobRoleId], references: [id])
-
+  jobRoleId String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  JobRole   JobRole[]
 
   @@map("employees")
 }
@@ -94,7 +93,8 @@ model JobRole {
   salary      Decimal   @default(0.00)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
-  employee    Employee?
+  employee    Employee? @relation(fields: [employeeId], references: [id])
+  employeeId  String?   @unique
 
   @@map("job_roles")
 }
