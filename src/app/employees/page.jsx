@@ -5,11 +5,7 @@ import React, { Fragment } from 'react';
 
 export default async function Employee () {
     const employees = await prisma.employee.findMany({
-        include: {
-            jobRole: {
-                select: { name: true, id: true, salary: true }
-            }
-        }
+
     });
 
     return (
@@ -32,7 +28,7 @@ export default async function Employee () {
                                 {employees.map((employee) => (
                                     <tr key={employee.id.toString()}>
                                         <td>{employee.first_name}, {employee.middle_name} {employee.last_name}</td>
-                                        <td>{employee.jobRole.salary.toString()}</td>
+                                        <td>{'employee'}</td>
                                         <td>{moment(employee.createdAt).format('LL')}</td>
                                     </tr>
                                 ))}

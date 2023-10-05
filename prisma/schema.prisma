@@ -81,20 +81,19 @@ model Employee {
   jobRoleId String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  JobRole   JobRole[]
+  jobRole   JobRole   @relation(fields: [jobRoleId], references: [id])
 
   @@map("employees")
 }
 
 model JobRole {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String     @id @default(uuid())
+  name        String     @unique
   description String?
-  salary      Decimal   @default(0.00)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  employee    Employee? @relation(fields: [employeeId], references: [id])
-  employeeId  String?   @unique
+  salary      Decimal    @default(0.00)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
+  Employee    Employee[]
 
   @@map("job_roles")
 }
